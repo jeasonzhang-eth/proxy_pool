@@ -51,12 +51,12 @@ class LogHandler(logging.Logger):
         self.level = level
         logging.Logger.__init__(self, self.name, level=level)
         if stream:
-            self.__setStreamHandler__()
+            self.__set_stream_handler__()
         if file:
             if platform.system() != "Windows":
-                self.__setFileHandler__()
+                self.__set_file_handler__()
 
-    def __setFileHandler__(self, level=None):
+    def __set_file_handler__(self, level=None):
         """
         set file handler
         :param level:
@@ -76,7 +76,7 @@ class LogHandler(logging.Logger):
         self.file_handler = file_handler
         self.addHandler(file_handler)
 
-    def __setStreamHandler__(self, level=None):
+    def __set_stream_handler__(self, level=None):
         """
         set stream handler
         :param level:

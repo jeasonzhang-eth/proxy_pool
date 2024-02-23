@@ -25,19 +25,19 @@ class ConfigHandler(withMetaclass(Singleton)):
         pass
 
     @LazyProperty
-    def serverHost(self):
+    def server_host(self):
         return os.environ.get("HOST", setting.HOST)
 
     @LazyProperty
-    def serverPort(self):
+    def server_port(self):
         return os.environ.get("PORT", setting.PORT)
 
     @LazyProperty
-    def dbConn(self):
+    def db_conn(self):
         return os.getenv("DB_CONN", setting.DB_CONN)
 
     @LazyProperty
-    def tableName(self):
+    def table_name(self):
         return os.getenv("TABLE_NAME", setting.TABLE_NAME)
 
     @property
@@ -46,15 +46,15 @@ class ConfigHandler(withMetaclass(Singleton)):
         return setting.PROXY_FETCHER
 
     @LazyProperty
-    def httpUrl(self):
+    def http_url(self):
         return os.getenv("HTTP_URL", setting.HTTP_URL)
 
     @LazyProperty
-    def httpsUrl(self):
+    def https_url(self):
         return os.getenv("HTTPS_URL", setting.HTTPS_URL)
 
     @LazyProperty
-    def verifyTimeout(self):
+    def verify_timeout(self):
         return int(os.getenv("VERIFY_TIMEOUT", setting.VERIFY_TIMEOUT))
 
     # @LazyProperty
@@ -62,7 +62,7 @@ class ConfigHandler(withMetaclass(Singleton)):
     #     return int(os.getenv("PROXY_CHECK_COUNT", setting.PROXY_CHECK_COUNT))
 
     @LazyProperty
-    def maxFailCount(self):
+    def max_fail_count(self):
         return int(os.getenv("MAX_FAIL_COUNT", setting.MAX_FAIL_COUNT))
 
     # @LazyProperty
@@ -70,11 +70,11 @@ class ConfigHandler(withMetaclass(Singleton)):
     #     return int(os.getenv("MAX_FAIL_RATE", setting.MAX_FAIL_RATE))
 
     @LazyProperty
-    def poolSizeMin(self):
+    def pool_size_min(self):
         return int(os.getenv("POOL_SIZE_MIN", setting.POOL_SIZE_MIN))
 
     @LazyProperty
-    def proxyRegion(self):
+    def proxy_region(self):
         return bool(os.getenv("PROXY_REGION", setting.PROXY_REGION))
 
     @LazyProperty

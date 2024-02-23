@@ -23,8 +23,8 @@ class ProxyHandler(object):
 
     def __init__(self):
         self.conf = ConfigHandler()
-        self.db = DbClient(self.conf.dbConn)
-        self.db.changeTable(self.conf.tableName)
+        self.db = DbClient(self.conf.db_conn)
+        self.db.change_table(self.conf.table_name)
 
     def get(self, https=False):
         """
@@ -34,7 +34,7 @@ class ProxyHandler(object):
         Returns:
         """
         proxy = self.db.get(https)
-        return Proxy.createFromJson(proxy) if proxy else None
+        return Proxy.create_from_json(proxy) if proxy else None
 
     def pop(self, https):
         """
@@ -43,7 +43,7 @@ class ProxyHandler(object):
         """
         proxy = self.db.pop(https)
         if proxy:
-            return Proxy.createFromJson(proxy)
+            return Proxy.create_from_json(proxy)
         return None
 
     def put(self, proxy):
@@ -61,13 +61,13 @@ class ProxyHandler(object):
         """
         return self.db.delete(proxy.proxy)
 
-    def getAll(self, https=False):
+    def get_all(self, https=False):
         """
         get all proxy from pool as Proxy list
         :return:
         """
-        proxies = self.db.getAll(https)
-        return [Proxy.createFromJson(_) for _ in proxies]
+        proxies = self.db.get_all(https)
+        return [Proxy.create_from_json(_) for _ in proxies]
 
     def exists(self, proxy):
         """
@@ -82,5 +82,5 @@ class ProxyHandler(object):
         return raw_proxy and use_proxy count
         :return:
         """
-        total_use_proxy = self.db.getCount()
+        total_use_proxy = self.db.get_count()
         return {'count': total_use_proxy}

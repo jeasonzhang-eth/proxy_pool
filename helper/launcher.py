@@ -22,8 +22,8 @@ log = LogHandler('launcher')
 
 def startServer():
     __beforeStart()
-    from api.proxyApi import runFlask
-    runFlask()
+    from api.proxyApi import run_flask
+    run_flask()
 
 
 def startScheduler():
@@ -47,14 +47,14 @@ def __showVersion():
 
 def __showConfigure():
     conf = ConfigHandler()
-    log.info("ProxyPool configure HOST: %s" % conf.serverHost)
-    log.info("ProxyPool configure PORT: %s" % conf.serverPort)
+    log.info("ProxyPool configure HOST: %s" % conf.server_host)
+    log.info("ProxyPool configure PORT: %s" % conf.server_port)
     log.info("ProxyPool configure PROXY_FETCHER: %s" % conf.fetchers)
 
 
 def __checkDBConfig():
     conf = ConfigHandler()
-    db = DbClient(conf.dbConn)
+    db = DbClient(conf.db_conn)
     log.info("============ DATABASE CONFIGURE ================")
     log.info("DB_TYPE: %s" % db.db_type)
     log.info("DB_HOST: %s" % db.db_host)

@@ -34,53 +34,53 @@ class ProxyValidator(withMetaclass(Singleton)):
     https_validator = []
 
     @classmethod
-    def addPreValidator(cls, func):
+    def add_pre_validator(cls, func):
         cls.pre_validator.append(func)
         return func
 
     @classmethod
-    def addHttpValidator(cls, func):
+    def add_http_validator(cls, func):
         cls.http_validator.append(func)
         return func
 
     @classmethod
-    def addHttpsValidator(cls, func):
+    def add_https_validator(cls, func):
         cls.https_validator.append(func)
         return func
 
 
-@ProxyValidator.addPreValidator
-def formatValidator(proxy):
+@ProxyValidator.add_pre_validator
+def format_validator(proxy):
     """检查代理格式"""
     return True if IP_REGEX.fullmatch(proxy) else False
 
 
-@ProxyValidator.addHttpValidator
-def httpTimeOutValidator(proxy):
-    """ http检测超时 """
-
-    proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
-
-    try:
-        r = head(conf.httpUrl, headers=HEADER, proxies=proxies, timeout=conf.verifyTimeout)
-        return True if r.status_code == 200 else False
-    except Exception as e:
-        return False
-
-
-@ProxyValidator.addHttpsValidator
-def httpsTimeOutValidator(proxy):
-    """https检测超时"""
-
-    proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
-    try:
-        r = head(conf.httpsUrl, headers=HEADER, proxies=proxies, timeout=conf.verifyTimeout, verify=False)
-        return True if r.status_code == 200 else False
-    except Exception as e:
-        return False
+# @ProxyValidator.add_http_validator
+# def http_timeout_validator(proxy):
+#     """ http检测超时 """
+#
+#     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
+#
+#     try:
+#         r = head(conf.http_url, headers=HEADER, proxies=proxies, timeout=conf.verify_timeout)
+#         return True if r.status_code == 200 else False
+#     except Exception as e:
+#         return False
 
 
-@ProxyValidator.addHttpValidator
-def customValidatorExample(proxy):
+# @ProxyValidator.add_https_validator
+# def https_timeout_validator(proxy):
+#     """https检测超时"""
+#
+#     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
+#     try:
+#         r = head(conf.https_url, headers=HEADER, proxies=proxies, timeout=conf.verify_timeout, verify=False)
+#         return True if r.status_code == 200 else False
+#     except Exception as e:
+#         return False
+
+
+@ProxyValidator.add_http_validator
+def custom_validator_example(proxy):
     """自定义validator函数，校验代理是否可用, 返回True/False"""
     return True

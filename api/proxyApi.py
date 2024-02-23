@@ -77,9 +77,9 @@ def refresh():
 
 
 @app.route('/all/')
-def getAll():
+def get_all():
     https = request.args.get("type", "").lower() == 'https'
-    proxies = proxy_handler.getAll(https)
+    proxies = proxy_handler.get_all(https)
     return jsonify([_.to_dict for _ in proxies])
 
 
@@ -92,7 +92,7 @@ def delete():
 
 @app.route('/count/')
 def getCount():
-    proxies = proxy_handler.getAll()
+    proxies = proxy_handler.get_all()
     http_type_dict = {}
     source_dict = {}
     for proxy in proxies:
@@ -103,9 +103,9 @@ def getCount():
     return {"http_type": http_type_dict, "source": source_dict, "count": len(proxies)}
 
 
-def runFlask():
+def run_flask():
     if platform.system() == "Windows":
-        app.run(host=conf.serverHost, port=conf.serverPort)
+        app.run(host=conf.server_host, port=conf.server_port)
     else:
         import gunicorn.app.base
 
@@ -126,7 +126,7 @@ def runFlask():
                 return self.application
 
         _options = {
-            'bind': '%s:%s' % (conf.serverHost, conf.serverPort),
+            'bind': '%s:%s' % (conf.server_host, conf.server_port),
             'workers': 4,
             'accesslog': '-',  # log to stdout
             'access_log_format': '%(h)s %(l)s %(t)s "%(r)s" %(s)s "%(a)s"'
@@ -135,4 +135,4 @@ def runFlask():
 
 
 if __name__ == '__main__':
-    runFlask()
+    run_flask()

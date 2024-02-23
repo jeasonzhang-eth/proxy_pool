@@ -21,10 +21,10 @@ def testConfig():
     :return:
     """
     conf = ConfigHandler()
-    print(conf.dbConn)
-    print(conf.serverPort)
-    print(conf.serverHost)
-    print(conf.tableName)
+    print(conf.db_conn)
+    print(conf.server_port)
+    print(conf.server_host)
+    print(conf.table_name)
     assert isinstance(conf.fetchers, list)
     print(conf.fetchers)
 

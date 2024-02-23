@@ -25,7 +25,7 @@ class ProxyFetcher(object):
     """
 
     @staticmethod
-    def freeProxy01():
+    def free_proxy01():
         """
         站大爷 https://www.zdaye.com/dayProxy.html
         """
@@ -47,7 +47,7 @@ class ProxyFetcher(object):
                 sleep(5)
 
     @staticmethod
-    def freeProxy02():
+    def free_proxy02():
         """
         代理66 http://www.66ip.cn/
         """
@@ -60,7 +60,7 @@ class ProxyFetcher(object):
                 yield "%s:%s" % (ip, port)
 
     @staticmethod
-    def freeProxy03():
+    def free_proxy03():
         """ 开心代理 """
         target_urls = ["http://www.kxdaili.com/dailiip.html", "http://www.kxdaili.com/dailiip/2/1.html"]
         for url in target_urls:
@@ -71,7 +71,7 @@ class ProxyFetcher(object):
                 yield "%s:%s" % (ip, port)
 
     @staticmethod
-    def freeProxy04():
+    def free_proxy04():
         """ FreeProxyList https://www.freeproxylists.net/zh/ """
         url = "https://www.freeproxylists.net/zh/?c=CN&pt=&pr=&a%5B%5D=0&a%5B%5D=1&a%5B%5D=2&u=50"
         tree = WebRequest().get(url, verify=False).tree
@@ -89,7 +89,7 @@ class ProxyFetcher(object):
                 yield "%s:%s" % (ip, port)
 
     @staticmethod
-    def freeProxy05(page_count=1):
+    def free_proxy05(page_count=1):
         """ 快代理 https://www.kuaidaili.com """
         url_pattern = [
             'https://www.kuaidaili.com/free/inha/{}/',
@@ -108,7 +108,7 @@ class ProxyFetcher(object):
                 yield ':'.join(tr.xpath('./td/text()')[0:2])
 
     @staticmethod
-    def freeProxy06():
+    def free_proxy06():
         """ 冰凌代理 https://www.binglx.cn """
         url = "https://www.binglx.cn/?page=1"
         try:
@@ -120,7 +120,7 @@ class ProxyFetcher(object):
             print(e)
 
     @staticmethod
-    def freeProxy07():
+    def free_proxy07():
         """ 云代理 """
         urls = ['http://www.ip3366.net/free/?stype=1', "http://www.ip3366.net/free/?stype=2"]
         for url in urls:
@@ -130,7 +130,7 @@ class ProxyFetcher(object):
                 yield ":".join(proxy)
 
     @staticmethod
-    def freeProxy08():
+    def free_proxy08():
         """ 小幻代理 """
         urls = ['https://ip.ihuan.me/address/5Lit5Zu9.html']
         for url in urls:
@@ -140,7 +140,7 @@ class ProxyFetcher(object):
                 yield ":".join(proxy)
 
     @staticmethod
-    def freeProxy09(page_count=1):
+    def free_proxy09(page_count=1):
         """ 免费代理库 """
         for i in range(1, page_count + 1):
             url = 'http://ip.jiangxianli.com/?country=中国&page={}'.format(i)
@@ -151,7 +151,7 @@ class ProxyFetcher(object):
                 yield ":".join(tr.xpath("./td/text()")[0:2]).strip()
 
     @staticmethod
-    def freeProxy10():
+    def free_proxy10():
         """ 89免费代理 """
         r = WebRequest().get("https://www.89ip.cn/index_1.html", timeout=10)
         proxies = re.findall(
@@ -161,7 +161,7 @@ class ProxyFetcher(object):
             yield ':'.join(proxy)
 
     @staticmethod
-    def freeProxy11():
+    def free_proxy11():
         """ 稻壳代理 https://www.docip.net/ """
         r = WebRequest().get("https://www.docip.net/data/free.json", timeout=10)
         try:
@@ -169,6 +169,14 @@ class ProxyFetcher(object):
                 yield each['ip']
         except Exception as e:
             print(e)
+
+    @staticmethod
+    def my_proxy():
+        with open('proxy_text.txt', 'r') as file:
+            for line in file:
+                ip_port = line.split('@')[1]
+                print(ip_port)
+                yield ip_port
 
     # @staticmethod
     # def wallProxy01():
@@ -235,7 +243,7 @@ class ProxyFetcher(object):
 
 if __name__ == '__main__':
     p = ProxyFetcher()
-    for _ in p.freeProxy06():
-        print(_)
+    for proxy in ProxyFetcher.my_proxy():
+        pass
 
 # http://nntime.com/proxy-list-01.htm

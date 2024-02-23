@@ -104,7 +104,7 @@ class RedisClient(object):
         """
         return self.__conn.hset(self.name, proxy_obj.proxy, proxy_obj.to_json)
 
-    def getAll(self, https):
+    def get_all(self, https):
         """
         字典形式返回所有代理, 使用changeTable指定hash name
         :return:
@@ -122,15 +122,15 @@ class RedisClient(object):
         """
         return self.__conn.delete(self.name)
 
-    def getCount(self):
+    def get_count(self):
         """
         返回代理数量
         :return:
         """
-        proxies = self.getAll(https=False)
+        proxies = self.get_all(https=False)
         return {'total': len(proxies), 'https': len(list(filter(lambda x: json.loads(x).get("https"), proxies)))}
 
-    def changeTable(self, name):
+    def change_table(self, name):
         """
         切换操作对象
         :param name:
@@ -141,7 +141,7 @@ class RedisClient(object):
     def test(self):
         log = LogHandler('redis_client')
         try:
-            self.getCount()
+            self.get_count()
         except TimeoutError as e:
             log.error('redis connection time out: %s' % str(e), exc_info=True)
             return e

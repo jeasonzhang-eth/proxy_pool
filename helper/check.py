@@ -39,8 +39,8 @@ class DoValidator(object):
         Returns:
             Proxy Object
         """
-        http_r = cls.httpValidator(proxy)
-        https_r = False if not http_r else cls.httpsValidator(proxy)
+        http_r = cls.http_validator(proxy)
+        https_r = False if not http_r else cls.https_validator(proxy)
 
         proxy.check_count += 1
         proxy.last_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -50,34 +50,34 @@ class DoValidator(object):
                 proxy.fail_count -= 1
             proxy.https = True if https_r else False
             if work_type == "raw":
-                proxy.region = cls.regionGetter(proxy) if cls.conf.proxyRegion else ""
+                proxy.region = cls.region_getter(proxy) if cls.conf.proxy_region else ""
         else:
             proxy.fail_count += 1
         return proxy
 
     @classmethod
-    def httpValidator(cls, proxy):
+    def http_validator(cls, proxy):
         for func in ProxyValidator.http_validator:
             if not func(proxy.proxy):
                 return False
         return True
 
     @classmethod
-    def httpsValidator(cls, proxy):
+    def https_validator(cls, proxy):
         for func in ProxyValidator.https_validator:
             if not func(proxy.proxy):
                 return False
         return True
 
     @classmethod
-    def preValidator(cls, proxy):
+    def pre_validator(cls, proxy):
         for func in ProxyValidator.pre_validator:
             if not func(proxy):
                 return False
         return True
 
     @classmethod
-    def regionGetter(cls, proxy):
+    def region_getter(cls, proxy):
         try:
             url = 'https://searchplugin.csdn.net/api/v1/ip/get?ip=%s' % proxy.proxy.split(':')[0]
             r = WebRequest().get(url=url, retry_time=1, timeout=2).json
@@ -127,7 +127,7 @@ class _ThreadChecker(Thread):
             self.log.info('UseProxyCheck - {}: {} pass'.format(self.name, proxy.proxy.ljust(23)))
             self.proxy_handler.put(proxy)
         else:
-            if proxy.fail_count > self.conf.maxFailCount:
+            if proxy.fail_count > self.conf.max_fail_count:
                 self.log.info('UseProxyCheck - {}: {} fail, count {} delete'.format(self.name,
                                                                                     proxy.proxy.ljust(23),
                                                                                     proxy.fail_count))

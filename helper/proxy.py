@@ -30,7 +30,7 @@ class Proxy(object):
         self._https = https
 
     @classmethod
-    def createFromJson(cls, proxy_json):
+    def create_from_json(cls, proxy_json):
         _dict = json.loads(proxy_json)
         return cls(proxy=_dict.get("proxy", ""),
                    fail_count=_dict.get("fail_count", 0),

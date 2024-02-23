@@ -27,7 +27,7 @@ def testProxyClass():
 
     print(proxy_str)
 
-    print(Proxy.createFromJson(proxy_str).to_dict)
+    print(Proxy.create_from_json(proxy_str).to_dict)
 
 
 if __name__ == '__main__':
